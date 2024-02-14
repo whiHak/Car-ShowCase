@@ -1,7 +1,7 @@
 "use client";
 
 import { CarCardProps } from "@/types";
-import { calculateCarRent } from "@/utils";
+import { calculateCarRent, generateCarImageURL } from "@/utils";
 import Image from "next/image";
 import React, { useState } from "react";
 import { CarDetail, CustomButton } from ".";
@@ -32,7 +32,7 @@ const CarCard = ({ car }: CarProps) => {
 
       <div className="relative w-full h-40 my-3 object-contain">
         <Image
-          src="/hero.png"
+          src = {generateCarImageURL(car)}
           alt="car model"
           fill
           priority
@@ -40,7 +40,7 @@ const CarCard = ({ car }: CarProps) => {
         />
       </div>
       <div className="relative flex w-full mt-2">
-        <div className="flex group-hover:invisible w-full justify-between text-gray">
+        <div className="flex group-hover:invisible w-full justify-between text-grey">
           <div className="flex flex-col justify-center items-center gap-2">
             <Image
               src="/steering-wheel.svg"
@@ -73,7 +73,7 @@ const CarCard = ({ car }: CarProps) => {
         </div>
       </div>
 
-      <CarDetail />
+      <CarDetail isOpen={isOpen} closeModal={()=> setIsOpen(false)} car={car}/>
     </div>
   );
 };
