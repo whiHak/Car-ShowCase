@@ -1,9 +1,7 @@
 import { CarCardProps, FetchProps, FilterProps } from "@/types";
 
 export async function fetchCars(filters: FetchProps) {
-  const { manufacturer, model, year, fuel, limit  } = filters;
-  console.log(filters)
-
+  const { manufacturer, model, year, fuel, limit } = filters;
   const headers = {
     "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPID_API_KEY || "",
     "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
@@ -21,13 +19,11 @@ export async function fetchCars(filters: FetchProps) {
 
 export const calculateCarRent = (city_mpg: number, year: number) => {
   const basePricePerDay = 50;
-  const mileageFactor = 0.1; 
+  const mileageFactor = 0.1;
   const ageFactor = 0.05;
-
 
   const mileageRate = city_mpg * mileageFactor;
   const ageRate = (new Date().getFullYear() - year) * ageFactor;
-
 
   const rentalRatePerDay = basePricePerDay + mileageRate + ageRate;
 
@@ -46,4 +42,15 @@ export function generateCarImageURL(car: CarCardProps, angle?: string) {
   url.searchParams.append("angle", `${angle}`);
 
   return `${url}`;
+}
+
+export function updateSearchParams(type: string, value: string) {
+  const params = new URLSearchParams(window.location.search);
+  params.set(type, value);
+
+  params.delete("model");
+
+  const newPathname = `${window.location.pathname}?${params.toString()}`;
+
+  return newPathname;
 }

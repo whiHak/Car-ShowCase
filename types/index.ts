@@ -54,3 +54,13 @@ export interface FilterProps {
   fuel: string;
   limit: number
  }
+
+ export interface OptionsProps {
+  title: string;
+  value: string;
+ }
+
+ export interface CustomFilterProps {
+  title: string;
+  options: OptionsProps[];
+ }
