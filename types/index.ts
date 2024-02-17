@@ -37,30 +37,35 @@ export interface CarDetailProps {
 
 export interface FilterProps {
   manufacturer: string;
-  model:string;
+  model: string;
   year: number;
   fuel: string;
-  limit: number
-  searchParams: FilterProps
+  limit: number;
+  searchParams: FilterProps;
 }
- export interface HomeProps {
-   searchParams?:FilterProps
- }
+export interface HomeProps {
+  searchParams?: FilterProps;
+}
 
- export interface FetchProps{
+export interface FetchProps {
   manufacturer: string;
-  model:string;
+  model: string;
   year: number;
   fuel: string;
-  limit: number
- }
+  limit: number;
+}
 
- export interface OptionsProps {
+export interface OptionsProps {
   title: string;
   value: string;
- }
+}
 
- export interface CustomFilterProps {
+export interface CustomFilterProps {
   title: string;
   options: OptionsProps[];
- }
+}
+
+export interface ShowMoreProps{
+  pageNumber: number;
+  isNext: boolean
+}

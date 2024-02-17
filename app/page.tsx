@@ -1,18 +1,17 @@
-import { CarCard, CustomFilter, Hero, SearchBar } from "@/components";
+import { CarCard, CustomFilter, Hero, SearchBar, ShowMore } from "@/components";
 import { fuels, yearsOfProduction } from "@/constants";
 import { FilterProps, HomeProps } from "@/types";
 import { fetchCars } from "@/utils";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import Image from "next/image";
 
 export default async function Home(params: FilterProps ) {
+  const {searchParams} = params;
   const{searchParams:{manufacturer, model, year, fuel, limit  }} = params
   const allCars = await fetchCars({
     manufacturer: manufacturer || "",
     model: model || "",
     year: year || 2022,
     fuel: fuel || "",
-    limit: limit || 10
+    limit: limit || 8
   });
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
   return (
@@ -39,6 +38,11 @@ export default async function Home(params: FilterProps ) {
                 <CarCard car={car} key={id}/>
               ))}
             </div>
+
+            <ShowMore 
+              pageNumber={(searchParams.limit || 8)/8}
+              isNext={(searchParams.limit || 8)> allCars.length}
+            />
           </section>
         ) : (
           <div className="home__error-container">
