@@ -3,7 +3,7 @@ import { fuels, yearsOfProduction } from "@/constants";
 import { FilterProps, HomeProps } from "@/types";
 import { fetchCars } from "@/utils";
 
-export default async function Home(params: FilterProps ) {
+const Home = async (params: FilterProps ) => {
   const {searchParams} = params;
   const{searchParams:{manufacturer, model, year, fuel, limit  }} = params
   const allCars = await fetchCars({
@@ -54,3 +54,5 @@ export default async function Home(params: FilterProps ) {
     </main>
   );
 }
+
+export default Home;
