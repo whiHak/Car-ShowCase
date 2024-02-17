@@ -34,7 +34,10 @@ export function generateCarImageURL(car: CarCardProps, angle?: string) {
   const url = new URL("https://cdn.imagin.studio/getimage");
   const { make, model, year } = car;
 
-  url.searchParams.append("customer", "hrjavascript-mastery");
+  url.searchParams.append(
+    "customer",
+    process.env.NEXT_PUBLIC_IMAGIN_API_KEY || ""
+  );
   url.searchParams.append("make", make);
   url.searchParams.append("modelFamily", model.split(" ")[0]);
   url.searchParams.append("zoomType", "fullscreen");
@@ -47,8 +50,6 @@ export function generateCarImageURL(car: CarCardProps, angle?: string) {
 export function updateSearchParams(type: string, value: string) {
   const params = new URLSearchParams(window.location.search);
   params.set(type, value);
-
-  params.delete("model");
 
   const newPathname = `${window.location.pathname}?${params.toString()}`;
 

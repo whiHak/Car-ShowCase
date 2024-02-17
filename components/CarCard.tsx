@@ -20,6 +20,7 @@ const CarCard = ({ car }: CarProps) => {
       <div className="car-card__content">
         <h2 className="car-card__content-title">
           {make}
+          {" "}
           {model}
         </h2>
       </div>
