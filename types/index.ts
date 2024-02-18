@@ -43,9 +43,6 @@ export interface FilterProps {
   limit: number;
   searchParams: FilterProps;
 }
-export interface HomeProps {
-  searchParams?: FilterProps;
-}
 
 export interface FetchProps {
   manufacturer: string;

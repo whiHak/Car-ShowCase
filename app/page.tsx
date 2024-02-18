@@ -1,17 +1,17 @@
 import { CarCard, CustomFilter, Hero, SearchBar, ShowMore } from "@/components";
 import { fuels, yearsOfProduction } from "@/constants";
-import { FilterProps, HomeProps } from "@/types";
+import { FilterProps } from "@/types";
 import { fetchCars } from "@/utils";
 
-export default async function Home(params: FilterProps ) {
-  const {searchParams} = params;
-  const{searchParams:{manufacturer, model, year, fuel, limit  }} = params
+const Home = async ({searchParams}: FilterProps ) => {
+  // const{searchParams:{manufacturer, model, year, fuel, limit  }} = params
+  // const searchParamss = useSearchParams()
   const allCars = await fetchCars({
-    manufacturer: manufacturer || "",
-    model: model || "",
-    year: year || 2022,
-    fuel: fuel || "",
-    limit: limit || 8
+    manufacturer: searchParams.manufacturer || "",
+    model: searchParams.model || "",
+    year: searchParams.year || 2022,
+    fuel: searchParams.fuel || "",
+    limit: searchParams.limit || 8
   });
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
   return (
@@ -54,3 +54,5 @@ export default async function Home(params: FilterProps ) {
     </main>
   );
 }
+
+export default Home;
