@@ -4,8 +4,6 @@ import { FilterProps } from "@/types";
 import { fetchCars } from "@/utils";
 
 const Home = async ({searchParams}: FilterProps ) => {
-  // const{searchParams:{manufacturer, model, year, fuel, limit  }} = params
-  // const searchParamss = useSearchParams()
   const allCars = await fetchCars({
     manufacturer: searchParams.manufacturer || "",
     model: searchParams.model || "",
