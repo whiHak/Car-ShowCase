@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.6.0",
     "@headlessui/react": "^1.7.18",
+    "car-rent-showcase": "file:",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18"
