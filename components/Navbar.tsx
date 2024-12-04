@@ -18,11 +18,13 @@ const Navbar = () => {
           />
         </Link>
         <SignedOut>
-          <CustomButton
-            title="Sing In"
-            btnType="button"
-            btnStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
-          />
+          <Link href="/sign-in">
+            <CustomButton
+              title="Sing In"
+              btnType="button"
+              btnStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
+            />
+          </Link>
         </SignedOut>
       </nav>
     </header>
