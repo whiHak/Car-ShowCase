@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { CustomButton } from ".";
-import { SignedOut } from "@clerk/nextjs";
+import { CustomButton, NavItems } from ".";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   return (
@@ -17,15 +17,24 @@ const Navbar = () => {
             className="object-between"
           />
         </Link>
+
+        <SignedIn>
+          <nav className="md:flex-between hidden w-full max-w-xl">
+            <NavItems/>
+          </nav>
+        </SignedIn>
         <SignedOut>
           <Link href="/sign-in">
             <CustomButton
-              title="Sing In"
+              title="Sign In"
               btnType="button"
               btnStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
-            />
+              />
           </Link>
         </SignedOut>
+        <SignedIn>
+          <UserButton/>
+        </SignedIn>
       </nav>
     </header>
   );
