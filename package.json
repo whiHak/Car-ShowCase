@@ -12,17 +12,21 @@
     "@clerk/nextjs": "^6.6.0",
     "@headlessui/react": "^1.7.18",
     "car-rent-showcase": "file:",
-    "next": "14.1.0",
-    "react": "^18",
-    "react-dom": "^18"
+    "next": "15.1.6",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "19.0.8",
+    "@types/react-dom": "19.0.3",
     "autoprefixer": "^10.0.1",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "19.0.8",
+    "@types/react-dom": "19.0.3"
   }
 }
