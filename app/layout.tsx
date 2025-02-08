@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Footer, Navbar } from "@/components";
 import { ClerkProvider } from "@clerk/nextjs";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Car Rent Showcase",

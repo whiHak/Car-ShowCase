@@ -1,3 +1,22 @@
+export const headerLinks = [
+  {
+    label: "Home",
+    route: "/",
+  },
+  {
+    label: "My cars",
+    route: "/my-cars",
+  },
+  {
+    label: "FeedBack",
+    route: "/feedback",
+  },
+  {
+    label: "About Us",
+    route: "/about-us",
+  },
+];
+
 export const manufacturers = [
     "Acura",
     "Alfa Romeo",
