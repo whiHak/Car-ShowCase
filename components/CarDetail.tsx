@@ -5,6 +5,8 @@ import { generateCarImageURL } from "@/utils";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { Fragment } from "react";
+import CustomButton from "./CustomButton";
+import { SignedIn } from "@clerk/nextjs";
 
 const CarDetail = ({ isOpen, closeModal, car }: CarDetailProps) => {
   return (
@@ -95,20 +97,31 @@ const CarDetail = ({ isOpen, closeModal, car }: CarDetailProps) => {
                     </h2>
 
                     <div className="mt-3 flex flex-wrap gap-4">
-                      {Object.entries(car).map(([key, value]) => (
-                        <div
-                          className="relative w-full flex justify-between gap-5 text-right"
-                          key={key}
-                        >
-                          <h4 className="text-grey captalize">
-                            {key.split("_").join(" ")}
-                          </h4>
-                          <p className="text-black-100 font-semibold">
-                            {value}
-                          </p>
-                        </div>
-                      ))}
+                      {Object.entries(car)
+                        .slice(3, 9)
+                        .map(([key, value]) => (
+                          <div
+                            className="relative w-full flex justify-between gap-5 text-right"
+                            key={key}
+                          >
+                            <h4 className="text-grey captalize">
+                              {key.split("_").join(" ")}
+                            </h4>
+                            <p className="text-black-100 font-semibold">
+                              {value}
+                            </p>
+                          </div>
+                        ))}
                     </div>
+                    <SignedIn>
+                      <CustomButton
+                        title="Proccced to Booking"
+                        btnStyles="w-full py-[16px] rounded-full bg-primary-blue"
+                        textStyles="text-white text-[14px] leading-[17px] font-bold"
+                        rightIcon="/right-arrow.svg"
+                        handleClick={() => {}}
+                      />
+                    </SignedIn>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
