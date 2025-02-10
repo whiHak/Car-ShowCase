@@ -70,6 +70,7 @@ module.exports = {
   			}
   		},
   		backgroundImage: {
+			'dotted-pattern': "url('/assets/images/dotted-pattern.png')",
   			'pattern': "url('/pattern.png')",
   			'hero-bg': "url('/hero-bg.png')"
   		},
