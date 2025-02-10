@@ -36,17 +36,18 @@ export interface CarDetailProps {
 }
 
 export interface FilterProps {
-  manufacturer: string;
-  model: string;
-  year: number;
-  fuel: string;
-  limit: number;
-  searchParams: FilterProps;
+  searchParams: Promise<{
+    manufacturer?: string;
+    model?: string;
+    year?: string;
+    fuel?: string;
+    limit?: string;
+  }>;
 }
 
 export interface FetchProps {
   manufacturer: string;
-  model: string;
+  model: string; 
   year: number;
   fuel: string;
   limit: number;

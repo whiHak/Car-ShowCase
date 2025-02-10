@@ -7,15 +7,15 @@ import { fuels, yearsOfProduction } from "@/constants";
 import { FilterProps } from "@/types";
 import { fetchCars } from "@/utils";
 
-const Home = async (props: FilterProps) => {
-  const searchParams = await props.searchParams;
+const Home = async ({ searchParams }: FilterProps) => {
   try {
+    const resolvedParams = await searchParams;
     const allCars = await Promise.resolve(fetchCars({
-      manufacturer: searchParams.manufacturer || "",
-      model: searchParams.model || "",
-      year: searchParams.year || 2022,
-      fuel: searchParams.fuel || "",
-      limit: searchParams.limit || 8
+      manufacturer: resolvedParams.manufacturer || "",
+      model: resolvedParams.model || "",
+      year: Number(resolvedParams.year) || 2022,
+      fuel: resolvedParams.fuel || "",
+      limit: Number(resolvedParams.limit) || 8
     }));
 
     const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
@@ -45,8 +45,8 @@ const Home = async (props: FilterProps) => {
               </div>
 
               <ShowMore 
-                pageNumber={(searchParams.limit || 8)/8}
-                isNext={(searchParams.limit || 8)> allCars.length}
+                pageNumber={Number(resolvedParams.limit || 8)/8}
+                isNext={Number(resolvedParams.limit || 8) > allCars.length}
               />
             </section>
           ) : (
