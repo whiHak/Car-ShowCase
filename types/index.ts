@@ -1,3 +1,4 @@
+import { PhoneNumberJSON } from "@clerk/backend";
 import { MouseEventHandler } from "react";
 
 export interface CustomButtonProps {
@@ -69,3 +70,13 @@ export interface ShowMoreProps{
   pageNumber: number;
   isNext: boolean
 }
+
+export type CreateuserPrams = {
+  clerkId: string;
+  email: string;
+  phoneNumber?: PhoneNumberJSON;
+  username: string;
+  firstName: string |null;
+  lastName: string | null;
+  photo?: string;
+};
