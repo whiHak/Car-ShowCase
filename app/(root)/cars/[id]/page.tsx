@@ -22,7 +22,7 @@ const CarDetailsPage = () => {
   };
 
   return (
-    <section className="w-full h-[100vh]">
+    <section className="relative top-16 w-full h-[100vh]">
       <Tabs
         defaultValue="carDetail"
         value={activeTab}
