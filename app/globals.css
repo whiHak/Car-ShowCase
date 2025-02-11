@@ -155,7 +155,7 @@
 }
 
 .car-card__icon-container {
-  @apply flex group-hover:invisible w-full justify-between text-grey;
+  @apply flex group-hover:invisible w-full justify-between text-grey-1;
 }
 
 .car-card__icon {
@@ -194,6 +194,66 @@
   @apply absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm;
 }
 /* END: Custom Filter styles */
+
+ /* 16 */
+ .p-bold-16 {
+  @apply text-[16px] font-bold leading-[24px];
+}
+
+.p-medium-16 {
+  @apply text-[16px] font-medium leading-[24px];
+}
+
+.p-regular-16 {
+  @apply text-[16px] font-normal leading-[24px];
+}
+
+/* 14 */
+.p-semibold-14 {
+  @apply text-[14px] font-semibold leading-[20px];
+}
+
+.p-medium-14 {
+  @apply text-[14px] font-medium leading-[20px];
+}
+
+.p-regular-14 {
+  @apply text-[14px] font-normal leading-[20px];
+}
+
+/* 12 */
+.p-medium-12 {
+  @apply text-[12px] font-medium leading-[20px];
+}
+
+
+/* fForm styles */
+.input-field {
+  @apply bg-grey-50 h-[54px] focus-visible:ring-offset-0 placeholder:text-grey-500 rounded-full p-medium-12 px-4 py-3 border-none focus-visible:ring-transparent !important;
+}
+
+/* SHADCN OVERRIDES */
+.select-field {
+  @apply w-full bg-grey-50 h-[54px] placeholder:text-grey-500 rounded-full p-regular-16 px-5 py-3 border-none focus-visible:ring-transparent focus:ring-transparent !important;
+}
+
+.textarea {
+  @apply bg-grey-50 flex flex-1 placeholder:text-grey-500 p-regular-16 px-5 py-3 border-none focus-visible:ring-transparent !important;
+}
+
+.button {
+  @apply rounded-full h-[54px] p-regular-16;
+}
+
+.select-item {
+  @apply py-3 cursor-pointer  focus:bg-primary-50;
+}
+
+.toggle-switch {
+  @apply bg-gray-300 !important;
+}
+
+/* END:Form styles */
 
 /* START: Footer styles */
 .footer {
@@ -238,6 +298,10 @@
   @apply w-full h-[48px] pl-12 p-4 bg-light-white rounded-r-full max-sm:rounded-full outline-none cursor-pointer text-sm;
 }
 /* END: searchbar styles */
+
+.button {
+  @apply rounded-full h-[54px] p-regular-16;
+}
 
 /* START: search manufacturer styles */
 .search-manufacturer {
@@ -390,7 +454,7 @@ right: 4px !important;
 .cl-formButtonPrimary:hover,
 .cl-formButtonPrimary:focus,
 .cl-formButtonPrimary:active {
-background-color: #705CF7
+background-color: #624CF5
 }
 
 /* ========================================== REACT-DATEPICKER STYLES */
@@ -406,11 +470,11 @@ margin-left: 16px;
 }
 
 .react-datepicker__day--selected {
-background-color: #624cf5 !important;
+background-color: #2B59FF !important;
 color: #ffffff !important;
 border-radius: 4px;
 }
 
 .react-datepicker__time-list-item--selected {
-background-color: #624cf5 !important;
+background-color: #2B59FF !important;
 }

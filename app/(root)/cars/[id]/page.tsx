@@ -1,63 +1,110 @@
+"use client";
 import BookConfirmation from "@/components/BookConfirmation";
 import DriverForm from "@/components/DriverForm";
 import FullCarDetail from "@/components/FullCarDetail";
 import PaymentOption from "@/components/PaymentOption";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 const CarDetailsPage = () => {
+  const [activeTab, setActiveTab] = useState("carDetail");
+  const [enabledTabs, setEnabledTabs] = useState({
+    carDetail: true,
+    drInfo: false,
+    payment: false,
+    confirmation: false,
+  });
+
+  const handleNext = (nextTab: string) => {
+    setEnabledTabs(prev => ({ ...prev, [nextTab]: true }));
+    setActiveTab(nextTab);
+  };
+
   return (
-    <section className="flex justify-center bg-primary-50 bg-dotted-pattern bg-contain">
-      <div className="grid justify-between grid-cols-1 md:grid-cols-2 2xl:max-w-7xl h-[100vh] ">
-        <Image
-          src={"/assets/images/hero.png"}
-          alt="hero Image"
-          width={500}
-          height={1000}
-          className="min-h-[300px] object-cover object-center"
-        />
-        <Tabs defaultValue="account" className="w-[400px] m-8">
-          <TabsList>
+    <section className="w-full h-[100vh]">
+      <Tabs
+        defaultValue="carDetail"
+        value={activeTab}
+        onValueChange={handleNext}
+        className=" py-5 md-py-10"
+      >
+        <div className="flex bg-primary-50 bg-dotted-pattern bg-cover bg-center border-[1px] border-gray-200 py-5  md:p-10  sm:text-left ">
+          <TabsList className=" wrapper gap-5 py-5 hidden md:flex ">
+            <Image
+              src={"/car-logo.png"}
+              alt="car logo"
+              width={100}
+              height={100}
+              className="min-h-[30px] object-cover object-center hidden md:block"
+            />
             <TabsTrigger
               value="carDetail"
-              className="w-full py-[11px] px-[28px] text-base rounded-full data-[state=active]:bg-primary-blue data-[state=active]:text-white"
+              className="w-full py-[11px] px-[28px] md:text-base text-xs font-bold rounded-full data-[state=active]:bg-primary-blue data-[state=active]:text-white "
             >
               Car Details
             </TabsTrigger>
             <TabsTrigger
               value="drInfo"
-              className="w-full py-[11px] px-[28px] text-base rounded-full data-[state=active]:bg-primary-blue data-[state=active]:text-white"
+              disabled={
+                activeTab !== "drInfo" &&
+                activeTab !== "payment" &&
+                activeTab !== "confirmation"
+              }
+              className="md:w-full w-max py-[11px] px-[28px] md:text-base text-xs font-bold rounded-full data-[state=active]:bg-primary-blue data-[state=active]:text-white"
             >
               Driver's Information
             </TabsTrigger>
             <TabsTrigger
               value="payment"
-              className="w-full m-3 py-[11px] px-[28px] text-base rounded-full data-[state=active]:bg-primary-blue data-[state=active]:text-white"
+              disabled={activeTab !== "payment" && activeTab !== "confirmation"}
+              className="w-full m-3 py-[11px] px-[28px] md:text-base text-xs font-bold rounded-full data-[state=active]:bg-primary-blue data-[state=active]:text-white"
             >
               Payment
             </TabsTrigger>
             <TabsTrigger
               value="confirmation"
-              className="w-full py-[11px] px-[28px] text-base rounded-full data-[state=active]:bg-primary-blue data-[state=active]:text-white"
+              disabled={activeTab !== "confirmation"}
+              className="w-full py-[11px] px-[28px] md:text-base text-xs font-bold rounded-full data-[state=active]:bg-primary-blue data-[state=active]:text-white"
             >
               Confirmation
             </TabsTrigger>
           </TabsList>
+        </div>
+        <div className="wrapper grid justify-between grid-cols-1 md:grid-cols-2 2xl:max-w-7xl ">
+          <Image
+            src={"/model-icon.png"}
+            alt="hero Image"
+            width={500}
+            height={100}
+            className="min-h-[200px] object-cover object-center"
+          />
           <TabsContent value="carDetail">
-            <FullCarDetail />
+            <FullCarDetail
+              onProceed={() => {
+                setEnabledTabs((prev) => ({ ...prev, drInfo: true }));
+                setActiveTab("drInfo");
+              }}
+            />
           </TabsContent>
           <TabsContent value="drInfo">
-            <DriverForm/>
+            <DriverForm 
+              onNext={() => {
+                handleNext("payment");
+              }}
+              onBack={() => {
+                setActiveTab("carDetail");
+              }}
+            />
           </TabsContent>
           <TabsContent value="payment">
-            <PaymentOption/>
+            <PaymentOption />
           </TabsContent>
           <TabsContent value="confirmation">
-            <BookConfirmation/>
+            <BookConfirmation />
           </TabsContent>
-        </Tabs>
-      </div>
+        </div>
+      </Tabs>
     </section>
   );
 };
