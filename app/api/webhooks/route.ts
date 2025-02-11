@@ -70,31 +70,25 @@ export async function POST(req: Request) {
 
     const eventType = evt.type
 
-    if (eventType === 'user.created') {
-      const {
-        id,
-        first_name,
-        last_name,
-        email_addresses,
-        phone_numbers,
-        username,
-        image_url,
-      } = evt.data
+    const haha = async() =>{
 
-      const user = {
-        clerkId: id,
-        email: email_addresses[0].email_address,
-        phoneNumber: phone_numbers ? phone_numbers[0] : '',
-        username: username!,
-        firstName: first_name,
-        lastName: last_name,
-        photo: image_url,
-      }
-
-      const newUser = await createuser(user)
-
-      return NextResponse.json({ message: 'OK', user: newUser })
+        const user = {
+          clerkId: "jgjg",
+          email: "bers@fadjh.com",
+          phoneNumber: "phone_numbers[0]",
+          username: "asdfa",
+          firstName: "fasdfasd",
+          lastName: "asdfa",
+          photo: "image_url",
+        };
+      
+        const newUser = await createuser(user);
+        console.log(newUser)
+    
+        
+        return NextResponse.json({ message: 'OK', user: newUser })
     }
+    haha();    
 
     return new Response('Webhook received', { status: 200 })
   } catch (error) {
