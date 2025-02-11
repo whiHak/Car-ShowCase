@@ -72,9 +72,9 @@ export interface ShowMoreProps{
 }
 
 export type CreateuserPrams = {
-  clerkId: string;
+  clerkId?: string;
   email: string;
-  phoneNumber?: PhoneNumberJSON;
+  phoneNumber?: PhoneNumberJSON | string;
   username: string;
   firstName: string |null;
   lastName: string | null;
