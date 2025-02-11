@@ -1,9 +1,17 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { clerkClient, WebhookEvent } from '@clerk/nextjs/server'
-import { createuser } from '@/lib/actions/user.actions'
 import { NextResponse } from 'next/server'
+import { createuser } from '@/lib/actions/user.actions'
 
+// Add GET method handler
+export async function GET() {
+  return new Response('Webhook endpoint is working!', {
+    status: 200,
+  })
+}
+
+// Existing POST method handler
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET
 
@@ -47,11 +55,9 @@ export async function POST(req: Request) {
     })
   }
 
-  // Do something with payload
-  // For this guide, log payload to console
-  const eventType = evt.type;
+  const eventType = evt.type
 
-  if (eventType === "user.created") {
+  if (eventType === 'user.created') {
     const {
       id,
       first_name,
@@ -60,29 +66,21 @@ export async function POST(req: Request) {
       phone_numbers,
       username,
       image_url,
-    } = evt.data;
+    } = evt.data
 
     const user = {
       clerkId: id,
       email: email_addresses[0].email_address,
-      phoneNumber: phone_numbers[0],
+      phoneNumber: phone_numbers ? phone_numbers[0] : '',
       username: username!,
       firstName: first_name,
       lastName: last_name,
       photo: image_url,
-    };
+    }
 
-    const newUser = await createuser(user);
+    const newUser = await createuser(user)
 
-    // if (newUser) {
-    //   await clerkClient.users.updateUserMetadata(id, {
-    //     publicMetadata: {
-    //       userId: newUser._id,
-    //     },
-    //   });
-    // }
-
-    return NextResponse.json({ message: "OK", user: newUser });
+    return NextResponse.json({ message: 'OK', user: newUser })
   }
 
   return new Response('Webhook received', { status: 200 })
