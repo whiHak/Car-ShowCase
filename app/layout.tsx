@@ -17,11 +17,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`relative`}>
-          <Navbar />
-          {children}
-          <Footer />
-        </body>
+        <body className={`relative`}>{children}</body>
       </html>
     </ClerkProvider>
   );

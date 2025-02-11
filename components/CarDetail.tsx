@@ -7,8 +7,14 @@ import Image from "next/image";
 import { Fragment } from "react";
 import CustomButton from "./CustomButton";
 import { SignedIn } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const CarDetail = ({ isOpen, closeModal, car }: CarDetailProps) => {
+  const router = useRouter()
+  const handleClick = () => {
+    router.push(`/cars/${car.id}`)
+  }
+
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -113,15 +119,13 @@ const CarDetail = ({ isOpen, closeModal, car }: CarDetailProps) => {
                           </div>
                         ))}
                     </div>
-                    <SignedIn>
                       <CustomButton
                         title="Proccced to Booking"
                         btnStyles="w-full py-[16px] rounded-full bg-primary-blue"
                         textStyles="text-white text-[14px] leading-[17px] font-bold"
                         rightIcon="/right-arrow.svg"
-                        handleClick={() => {}}
+                        handleClick={handleClick}
                       />
-                    </SignedIn>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

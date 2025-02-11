@@ -6,6 +6,7 @@ export interface CustomButtonProps {
   btnType?: "button" | "submit";
   textStyles?: string;
   rightIcon?: string;
+  disabled?: boolean;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -15,6 +16,7 @@ export interface SearchManufacturerProps {
 }
 
 export interface CarCardProps {
+  id:string;
   city_mpg: number;
   class: string;
   combination_mpg: number;
