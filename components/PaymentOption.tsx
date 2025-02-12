@@ -48,8 +48,8 @@ const PaymentOption = ({ onNext, onBack }: PaymentOptionProps) => {
   );
 
   return (
-    <div className="h-full flex flex-col justify-between">
-      <div className="flex flex-col gap-8">
+    <div className="h-full flex flex-col justify-between gap-4">
+      <div className="flex flex-col gap-6">
         <div className="p-4 w-full flex justify-between mx-auto bg-primary-50 rounded-xl shadow-md">
           <div className="flex flex-col gap-3">
             <h1 className="text-lg font-bold">TOYOTA COROLLA</h1>
