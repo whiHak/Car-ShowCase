@@ -98,7 +98,15 @@ const CarDetailsPage = () => {
             />
           </TabsContent>
           <TabsContent value="payment">
-            <PaymentOption />
+            <PaymentOption 
+              onNext={() => {
+                setEnabledTabs(prev => ({ ...prev, confirmation: true }));
+                setActiveTab("confirmation");
+              }}
+              onBack={() => {
+                setActiveTab("drInfo");
+              }}
+            />
           </TabsContent>
           <TabsContent value="confirmation">
             <BookConfirmation />

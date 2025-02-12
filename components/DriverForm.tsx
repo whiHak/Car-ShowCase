@@ -166,7 +166,7 @@ const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
           />
           <CustomButton
             title={
-              form.formState.isSubmitting ? "Submitting..." : "Confirm Booking"
+              form.formState.isSubmitting ? "Submitting..." : "Continue to Payment"
             }
             btnType="submit"
             disabled={form.formState.isSubmitting}
