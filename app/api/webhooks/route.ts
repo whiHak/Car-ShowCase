@@ -95,7 +95,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'OK', user: newUser })
     }
 
-    return new Response('Webhook received', { status: 200 })
   } catch (error) {
     console.error('Webhook error:', error);
     return new Response('Internal Server Error', {
