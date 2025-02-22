@@ -31,8 +31,9 @@ const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
     defaultValues: {
       fullName: "",
       email: "",
-      pickupDate: null,
-      returnDate: null,
+      phoneNo: "",
+      licenceNo: "",
+      FIN: "",
     },
   });
 
@@ -70,6 +71,59 @@ const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      placeholder="Email Address"
+                      {...field}
+                      className="input-field"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-5 md:flex-row">
+            <FormField
+              control={form.control}
+              name="phoneNo"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      placeholder="Phone Number"
+                      {...field}
+                      className="input-field"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="licenceNo"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      placeholder="Licence Number"
+                      {...field}
+                      className="input-field"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-5 md:flex-row">
             <FormField
               control={form.control}
               name="pickupDate"
@@ -100,24 +154,6 @@ const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
                     </div>
                   </FormControl>
                   <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="flex flex-col gap-5 md:flex-row">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormControl>
-                    <Input
-                      placeholder="Email Address"
-                      {...field}
-                      className="input-field"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
@@ -155,6 +191,40 @@ const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
               )}
             />
           </div>
+          <div className="flex flex-col gap-5 md:flex-row">
+            <FormField
+              control={form.control}
+              name="FIN"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      placeholder="Fayda ID Number"
+                      {...field}
+                      className="input-field"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="licenceNo"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      placeholder="Licence Number"
+                      {...field}
+                      className="input-field"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
         <div className="flex flex-col justify-between gap-5 md:flex-row">
           <CustomButton
@@ -166,7 +236,9 @@ const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
           />
           <CustomButton
             title={
-              form.formState.isSubmitting ? "Submitting..." : "Continue to Payment"
+              form.formState.isSubmitting
+                ? "Submitting..."
+                : "Continue to Payment"
             }
             btnType="submit"
             disabled={form.formState.isSubmitting}

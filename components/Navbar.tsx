@@ -32,7 +32,7 @@ export default function Navbar() {
           <SignedOut>
             <Link href="/sign-in">
               <CustomButton
-                title="Sing In"
+                title="Sign In"
                 btnType="button"
                 btnStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
               />

@@ -4,10 +4,47 @@ import DriverForm from "@/components/DriverForm";
 import FullCarDetail from "@/components/FullCarDetail";
 import PaymentOption from "@/components/PaymentOption";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getCarById } from "@/lib/actions/car.action";
+import { Params } from "@/types";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const CarDetailsPage = () => {
+const CarDetailsPage = ({ params }: Params) => {
+  const [car, setCar] = useState({} as any);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getCar = async () => {
+      try {
+        const resolvedParams = await Promise.resolve(params);
+        const carId = resolvedParams.id;
+        
+        if (!carId) return;
+
+        setIsLoading(true);
+        setError(null);
+
+        const res = await fetch(`/api/cars/${carId}`, {
+          method: "GET",
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const result = await res.json();
+        setCar(result);
+      } catch (error) {
+        setError(error instanceof Error ? error.message : 'Failed to fetch car details');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getCar();
+  }, [params]);
+
   const [activeTab, setActiveTab] = useState("carDetail");
   const [enabledTabs, setEnabledTabs] = useState({
     carDetail: true,
@@ -17,12 +54,28 @@ const CarDetailsPage = () => {
   });
 
   const handleNext = (nextTab: string) => {
-    setEnabledTabs(prev => ({ ...prev, [nextTab]: true }));
+    setEnabledTabs((prev) => ({ ...prev, [nextTab]: true }));
     setActiveTab(nextTab);
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500">
+        {error}
+      </div>
+    );
+  }
+
   return (
-    <section className="relative top-16 w-full ">
+    <section className=" h-[100vh] relative top-16 w-full ">
       <Tabs
         defaultValue="carDetail"
         value={activeTab}
@@ -71,16 +124,17 @@ const CarDetailsPage = () => {
             </TabsTrigger>
           </TabsList>
         </div>
-        <div className="wrapper grid justify-between grid-cols-1 md:grid-cols-2 2xl:max-w-7xl ">
+        <div className="wrapper h-full grid justify-between grid-cols-1 md:grid-cols-2 2xl:max-w-7xl ">
           <Image
-            src={"/model-icon.png"}
-            alt="hero Image"
+            src={car?.imageUrl || "/demo-car.webp"}
+            alt={`${car?.make} ${car?.model}` || "Car Image"}
             width={500}
             height={100}
             className="min-h-[200px] object-cover object-center"
           />
           <TabsContent value="carDetail">
             <FullCarDetail
+              car={car}
               onProceed={() => {
                 setEnabledTabs((prev) => ({ ...prev, drInfo: true }));
                 setActiveTab("drInfo");
@@ -88,7 +142,7 @@ const CarDetailsPage = () => {
             />
           </TabsContent>
           <TabsContent value="drInfo">
-            <DriverForm 
+            <DriverForm
               onNext={() => {
                 handleNext("payment");
               }}
@@ -98,9 +152,9 @@ const CarDetailsPage = () => {
             />
           </TabsContent>
           <TabsContent value="payment">
-            <PaymentOption 
+            <PaymentOption
               onNext={() => {
-                setEnabledTabs(prev => ({ ...prev, confirmation: true }));
+                setEnabledTabs((prev) => ({ ...prev, confirmation: true }));
                 setActiveTab("confirmation");
               }}
               onBack={() => {

@@ -17,19 +17,19 @@ export interface SearchManufacturerProps {
 }
 
 export interface CarCardProps {
-  id:string;
-  city_mpg: number;
-  class: string;
-  combination_mpg: number;
-  cylinders: number;
-  displacement: number;
-  drive: string;
-  fuel_type: string;
-  highway_mpg: number;
+  _id: string;
   make: string;
   model: string;
-  transmission: string;
-  year: number;
+  drive: string;
+  fuel: string;
+  plate: string;
+  price: string;
+  cylinder: string;
+  year: string;
+  imageUrl1: string;
+  imageUrl2?: string;
+  imageUrl3?: string;
+  imageUrl4?: string;
 }
 
 export interface CarDetailProps {
@@ -50,7 +50,7 @@ export interface FilterProps {
 
 export interface FetchProps {
   manufacturer: string;
-  model: string; 
+  model: string;
   year: number;
   fuel: string;
   limit: number;
@@ -66,9 +66,9 @@ export interface CustomFilterProps {
   options: OptionsProps[];
 }
 
-export interface ShowMoreProps{
+export interface ShowMoreProps {
   pageNumber: number;
-  isNext: boolean
+  isNext: boolean;
 }
 
 export type CreateuserPrams = {
@@ -76,7 +76,11 @@ export type CreateuserPrams = {
   email: string;
   phoneNumber?: PhoneNumberJSON | string;
   username: string;
-  firstName: string |null;
+  firstName: string | null;
   lastName: string | null;
   photo?: string;
 };
+
+export type Params = {
+  params: Promise<{ id: string }>;
+}

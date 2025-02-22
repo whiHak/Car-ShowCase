@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 const CarDetail = ({ isOpen, closeModal, car }: CarDetailProps) => {
   const router = useRouter()
   const handleClick = () => {
-    router.push(`/cars/${car.id}`)
+    router.push(`/cars/${car._id}`)
   }
 
   return (
@@ -58,7 +58,7 @@ const CarDetail = ({ isOpen, closeModal, car }: CarDetailProps) => {
                   <div className="flex-1 flex flex-col gap-3">
                     <div className="relative w-full h-40 bg-pattern bg-cover bg-center rounded-lg">
                       <Image
-                        src={generateCarImageURL(car)}
+                        src={car.imageUrl1 as string || "/demo-car.webp"}
                         alt="car model"
                         fill
                         priority
@@ -68,7 +68,7 @@ const CarDetail = ({ isOpen, closeModal, car }: CarDetailProps) => {
                     <div className="flex gap-3">
                       <div className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg">
                         <Image
-                          src={generateCarImageURL(car, "29")}
+                          src={car.imageUrl2 as string || "/demo-car.webp"}
                           alt="car model"
                           fill
                           priority
@@ -77,7 +77,7 @@ const CarDetail = ({ isOpen, closeModal, car }: CarDetailProps) => {
                       </div>
                       <div className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg">
                         <Image
-                          src={generateCarImageURL(car, "33")}
+                          src={car.imageUrl3 as string || "/demo-car.webp"}
                           alt="car model"
                           fill
                           priority
@@ -86,7 +86,7 @@ const CarDetail = ({ isOpen, closeModal, car }: CarDetailProps) => {
                       </div>
                       <div className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg">
                         <Image
-                          src={generateCarImageURL(car, "13")}
+                          src={car.imageUrl4 as string || "/demo-car.webp"}
                           alt="car model"
                           fill
                           priority
@@ -99,6 +99,7 @@ const CarDetail = ({ isOpen, closeModal, car }: CarDetailProps) => {
                   <div className="relative flex-1 flex flex-col gap-2">
                     <h2 className="font-semibold text-xl capitalize">
                       {car.make}
+                      {" "}
                       {car.model}
                     </h2>
 
@@ -110,10 +111,10 @@ const CarDetail = ({ isOpen, closeModal, car }: CarDetailProps) => {
                             className="relative w-full flex justify-between gap-5 text-right"
                             key={key}
                           >
-                            <h4 className="text-grey captalize">
+                            <h4 className="text-grey capitalize">
                               {key.split("_").join(" ")}
                             </h4>
-                            <p className="text-black-100 font-semibold">
+                            <p className="text-black-100 font-semibold capitalize">
                               {value}
                             </p>
                           </div>

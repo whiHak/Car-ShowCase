@@ -12,11 +12,10 @@ interface CarProps {
   car: CarCardProps;
 }
 const CarCard = ({ car }: CarProps) => {
-  const { city_mpg, drive, make, model, transmission, year } = car;
+  const { price, drive, make, model, year, imageUrl1 } = car;
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const carRent = calculateCarRent(city_mpg, year);
   return (
     <div className="car-card group">
       <div className="car-card__content">
@@ -29,13 +28,13 @@ const CarCard = ({ car }: CarProps) => {
 
       <p className="flex mt-6 text-[32px] font-extrabold">
         <span className="self-start text-[14px] font-semibold">Birr</span>
-        {carRent}
+        {price}
         <span className="self-end text-[14px] font-semibold">/day</span>
       </p>
 
       <div className="relative w-full h-40 my-3 object-contain">
         <Image
-          src = {generateCarImageURL(car)}
+          src = {imageUrl1}
           alt="car model"
           fill
           priority
@@ -52,7 +51,7 @@ const CarCard = ({ car }: CarProps) => {
               height={20}
             />
             <p className="text-[14px]">
-              {transmission === "a" ? "Automatic" : "Manual"}
+              Manual
             </p>
           </div>
           <div className="flex flex-col justify-center items-center gap-2">
@@ -61,7 +60,7 @@ const CarCard = ({ car }: CarProps) => {
           </div>
           <div className="flex flex-col justify-center items-center gap-2">
             <Image src="/gas.svg" alt="gas" width={20} height={20} />
-            <p className="text-[14px]">{city_mpg} MPG</p>
+            <p className="text-[14px]">12 MPG</p>
           </div>
         </div>
 

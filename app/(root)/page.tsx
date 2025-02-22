@@ -4,20 +4,22 @@ import Hero from "@/components/Hero";
 import SearchBar from "@/components/SearchBar";
 import ShowMore from "@/components/ShowMore";
 import { fuels, yearsOfProduction } from "@/constants";
+import { getAllCars } from "@/lib/actions/car.action";
 import { FilterProps } from "@/types";
 import { fetchCars } from "@/utils";
 
 const Home = async ({ searchParams }: FilterProps) => {
   try {
     const resolvedParams = await searchParams;
-    const allCars = await Promise.resolve(fetchCars({
-      manufacturer: resolvedParams.manufacturer || "",
-      model: resolvedParams.model || "",
-      year: Number(resolvedParams.year) || 2022,
-      fuel: resolvedParams.fuel || "",
-      limit: Number(resolvedParams.limit) || 8
-    }));
+    // const allCars = await Promise.resolve(fetchCars({
+    //   manufacturer: resolvedParams.manufacturer || "",
+    //   model: resolvedParams.model || "",
+    //   year: Number(resolvedParams.year) || 2022,
+    //   fuel: resolvedParams.fuel || "",
+    //   limit: Number(resolvedParams.limit) || 8
+    // }));
 
+    const allCars = await getAllCars();
     const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
     return (
       <main className="overflow-hidden ">
