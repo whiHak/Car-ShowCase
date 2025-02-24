@@ -17,31 +17,80 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CustomButton from "./CustomButton";
+import { useBook } from "@/hooks/useBook";
+import { BookContext } from "@/context/BookContext";
+import { auth } from "@clerk/nextjs/server";
+import { getUserId } from "@/lib/actions/user.actions";
 
 interface DriverFormProps {
   onNext: () => void;
   onBack: () => void;
+  car: any;
 }
 
-const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
+const DriverForm = ({ onNext, onBack, car }: DriverFormProps) => {
+  const { createNewBooking, loading, error, bookings } = useBook();
+  console.log(bookings);
+
+  
   const form = useForm<z.infer<typeof driverFormSchema>>({
     resolver: zodResolver(driverFormSchema),
     defaultValues: {
       fullName: "",
       email: "",
       phoneNo: "",
-      licenceNo: "",
+      licenseNumber: "",
       FIN: "",
     },
   });
-
+  
   async function onSubmit(values: z.infer<typeof driverFormSchema>) {
-    // Do something with the form values.
-    console.log(values);
-    // If form is valid, navigate to payment tab
-    onNext();
+    try {
+      
+      const defaultValues = {
+        FIN: "",
+        email: "",
+        fullName: "",
+        licenseNumber: "",
+        phoneNo: "",
+        pickUpDate: "",
+        returnDate: "",
+        licenseValidtill: "",
+        totalPrice: "0",
+        paymentStatus: "pending",
+      };
+
+      const pickupDate = new Date(values.pickUpDate);
+    const returnDate = new Date(values.returnDate);
+    const diffTime = Math.abs(returnDate.getTime() - pickupDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    // Calculate total price (car price * number of days)
+    const carPrice = parseFloat(car?.price || "0");
+    const totalPrice = (carPrice * diffDays).toString();
+
+  
+      const formattedValues = {
+        ...values,
+        pickUpDate: values.pickUpDate ? values.pickUpDate.toISOString() : defaultValues.pickUpDate,
+        returnDate: values.returnDate ? values.returnDate.toISOString() : defaultValues.returnDate,
+        totalPrice,
+        car:car._id ,
+      };
+      // Merge form values with default values
+      const completeValues = { ...defaultValues, ...formattedValues };
+      console.log(completeValues);
+  
+      // Call createNewBooking with the complete values
+      await createNewBooking(completeValues);
+      console.log(bookings);
+      onNext();
+    } catch (error) {
+      console.error("Error creating booking:", error);
+      // Handle error if needed
+    }
   }
 
   return (
@@ -108,12 +157,12 @@ const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
             />
             <FormField
               control={form.control}
-              name="licenceNo"
+              name="FIN"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl>
                     <Input
-                      placeholder="Licence Number"
+                      placeholder="Fayda ID Number"
                       {...field}
                       className="input-field"
                     />
@@ -122,11 +171,12 @@ const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
                 </FormItem>
               )}
             />
+            
           </div>
           <div className="flex flex-col gap-5 md:flex-row">
             <FormField
               control={form.control}
-              name="pickupDate"
+              name="pickUpDate"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl>
@@ -153,7 +203,7 @@ const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
                       />
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
@@ -186,31 +236,15 @@ const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
                       />
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
           </div>
           <div className="flex flex-col gap-5 md:flex-row">
-            <FormField
+          <FormField
               control={form.control}
-              name="FIN"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormControl>
-                    <Input
-                      placeholder="Fayda ID Number"
-                      {...field}
-                      className="input-field"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="licenceNo"
+              name="licenseNumber"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl>
@@ -224,9 +258,26 @@ const DriverForm = ({ onNext, onBack }: DriverFormProps) => {
                 </FormItem>
               )}
             />
+            
+            <FormField
+              control={form.control}
+              name="licenseValidtill"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      placeholder="Licence Valid Until"
+                      {...field}
+                      className="input-field"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
           </div>
         </div>
-        <div className="flex flex-col justify-between gap-5 md:flex-row">
+        <div className="flex flex-col justify-between gap-5 md:flex-row my-4">
           <CustomButton
             title="Back"
             btnStyles="w-full md:w-max flex-row-reverse gap-4 py-[16px] rounded-full bg-primary-blue"

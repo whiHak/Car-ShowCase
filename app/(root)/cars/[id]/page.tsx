@@ -8,6 +8,7 @@ import { getCarById } from "@/lib/actions/car.action";
 import { Params } from "@/types";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify'
 
 const CarDetailsPage = ({ params }: Params) => {
   const [car, setCar] = useState({} as any);
@@ -75,7 +76,7 @@ const CarDetailsPage = ({ params }: Params) => {
   }
 
   return (
-    <section className=" h-[100vh] relative top-16 w-full ">
+    <section className="relative top-16 w-full ">
       <Tabs
         defaultValue="carDetail"
         value={activeTab}
@@ -149,6 +150,7 @@ const CarDetailsPage = ({ params }: Params) => {
               onBack={() => {
                 setActiveTab("carDetail");
               }}
+              car={car}
             />
           </TabsContent>
           <TabsContent value="payment">
@@ -160,6 +162,7 @@ const CarDetailsPage = ({ params }: Params) => {
               onBack={() => {
                 setActiveTab("drInfo");
               }}
+              car={car}
             />
           </TabsContent>
           <TabsContent value="confirmation">
@@ -167,6 +170,7 @@ const CarDetailsPage = ({ params }: Params) => {
           </TabsContent>
         </div>
       </Tabs>
+      <ToastContainer/>
     </section>
   );
 };

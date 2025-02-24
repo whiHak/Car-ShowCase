@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb";
 import { CreateuserPrams } from "@/types";
 import User from "../database/models/user.model";
 import { connectToDatabase } from "../database";
+import { auth } from "@clerk/nextjs/server";
 
 const populateUser = (query: any) => {
   return query.populate({
@@ -22,6 +23,15 @@ export const createuser = async (user: CreateuserPrams) => {
     console.error(error);
   }
 };
+
+export const getUserId = async () =>{
+  const {sessionClaims} = await auth();
+      if (!sessionClaims) {
+        throw new Error("Unauthorized");
+      }
+      const userId = sessionClaims.userId as string;
+      return userId
+}
 
 // export const getUserById = async(userId: string) => {
 //   try {

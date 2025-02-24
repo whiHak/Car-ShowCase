@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { BookContextProvider } from "@/context/BookContext";
 
 export const metadata: Metadata = {
   title: "Car Rent Showcase",
@@ -16,9 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`relative`}>{children}</body>
-      </html>
+      <BookContextProvider>
+        <html lang="en">
+          <body className={`relative`}>{children}</body>
+        </html>
+      </BookContextProvider>
     </ClerkProvider>
   );
 }

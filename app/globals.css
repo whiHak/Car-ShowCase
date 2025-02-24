@@ -478,3 +478,14 @@ border-radius: 4px;
 .react-datepicker__time-list-item--selected {
 background-color: #2B59FF !important;
 }
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

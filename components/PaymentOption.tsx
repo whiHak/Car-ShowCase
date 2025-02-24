@@ -2,14 +2,17 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import CustomButton from "./CustomButton";
+import { useBook } from "@/hooks/useBook";
 
 interface PaymentOptionProps {
   onNext: () => void;
   onBack: () => void;
+  car: any;
 }
 
-const PaymentOption = ({ onNext, onBack }: PaymentOptionProps) => {
+const PaymentOption = ({ onNext, onBack, car }: PaymentOptionProps) => {
   const [selectedOption, setSelectedOption] = useState("");
+  const { loading, error, bookings, updateExistingBooking } = useBook();
 
   const options = [
     { id: "chapa", label: "Chapa", imgsrc: "/assets/images/chapa.png" },
@@ -21,6 +24,40 @@ const PaymentOption = ({ onNext, onBack }: PaymentOptionProps) => {
     },
     { id: "cbe", label: "CBE", imgsrc: "/assets/images/CBE.png" },
   ];
+
+  const handleConfirmBooking = async () => {
+    try {
+      if (!selectedOption || !bookings.length) return;
+
+      // Get the latest booking (assuming it's the one we want to update)
+      const latestBooking = bookings[bookings.length - 1];
+
+      // Update the booking with the selected payment method
+      await updateExistingBooking(latestBooking._id, {
+        paymentMethod: selectedOption,
+        paymentStatus: "pending" // or any other status you want to set
+      });
+
+      // If successful, proceed to next step
+      onNext();
+    } catch (error) {
+      console.error("Error updating booking with payment method:", error);
+    }
+  };
+
+  const formatDateRange = (startDate: string, endDate: string) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    const startMonth = months[start.getMonth()];
+    const startDay = start.getDate();
+    const endMonth = months[end.getMonth()];
+    const endDay = end.getDate();
+    
+    return `${startMonth} ${startDay} to ${endMonth} ${endDay}`;
+  };
 
   const PaymentCard = ({ option }: { option: (typeof options)[0] }) => (
     <div className="flex w-full space-x-3">
@@ -50,21 +87,26 @@ const PaymentOption = ({ onNext, onBack }: PaymentOptionProps) => {
   return (
     <div className="h-full flex flex-col justify-between gap-4">
       <div className="flex flex-col gap-6">
-        <div className="p-4 w-full flex justify-between mx-auto bg-primary-50 rounded-xl shadow-md">
+        <div className="p-4 w-full flex justify-between gap-3 mx-auto bg-primary-50 rounded-xl shadow-md">
           <div className="flex flex-col gap-3">
-            <h1 className="text-lg font-bold">TOYOTA COROLLA</h1>
-            <p className="text-sm">All your desktop or laptop needs</p>
+            <h1 className="text-lg font-bold uppercase">{car.make}{" "}{car.model}</h1>
+            <p className="text-sm text-green-500">Please Confirm the Information and</p>
+            <p className="text-sm text-green-500">Select Your Payment Method</p>
           </div>
-          <div className="flex flex-col justify-start gap-2">
-            <p className="text-lg">
-              PRICE: <span className="font-bold">23 Birr/DAY</span>
+          <div className="flex flex-col justify-start gap-2 w-max ">
+            <p className="text-lg w-max flex-nowrap">
+              PRICE: <span className="font-bold">{bookings[bookings.length - 1].totalPrice} Birr</span>
+            </p>
+            <p className="text-lg ">
+              Driver: <span className="font-bold capitalize">{bookings[bookings.length - 1].fullName}</span>
             </p>
             <p className="text-lg">
-              Driver: <span className="font-bold">Debebe K.</span>
-            </p>
-            <p className="text-lg">Made available</p>
-            <p className="text-lg">
-              Date: <span className="font-bold">May 30 to Dec 30</span>
+              Date: <span className="font-bold">
+                {formatDateRange(
+                  bookings[bookings.length - 1].pickUpDate,
+                  bookings[bookings.length - 1].returnDate
+                )}
+              </span>
             </p>
           </div>
         </div>
@@ -96,7 +138,7 @@ const PaymentOption = ({ onNext, onBack }: PaymentOptionProps) => {
           btnStyles="w-full md:w-max gap-4 py-[16px] rounded-full bg-primary-blue"
           textStyles="text-white text-[14px] leading-[17px] font-bold"
           rightIcon="/right-arrow.svg"
-          handleClick={onNext}
+          handleClick={handleConfirmBooking}
         />
       </div>
     </div>
