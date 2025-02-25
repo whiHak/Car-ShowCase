@@ -19,7 +19,7 @@ const MobileNav = () => {
           </SheetTrigger>
           <SheetContent className="flex flex-col gap-6 bg-white md:hidden">
             <Image 
-                src="/car-logo.svg"
+                src="/logo.svg"
                 alt="logo"
                 width={138}
                 height={38}
