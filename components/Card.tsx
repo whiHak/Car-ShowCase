@@ -31,11 +31,11 @@ const Card = async ({ book }: { book: any }) => {
         style={{ backgroundImage: `url(${book?.car?.imageUrl1})` }}
         className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500"
       >
-        <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
+        {book?.paymentStatus === "pending" && (<div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
           <Link href="">
             <CancelReservation book={book} />
           </Link>
-        </div>
+        </div>)}
       </div>
 
       <div className="flex min-h-[130px] flex-col gap-3 p-5 md:gap-4">
