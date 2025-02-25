@@ -2,6 +2,7 @@ import { model, models, Schema } from "mongoose";
 
 export interface IBooking extends Document {
   _id: string;
+  tx_ref: string;
   car: { _id: string; make: string; model:string; price:string; imakeUrl1: string };
   user: { _id: string; fullName: string; email: string };
   fullName: string;
@@ -23,6 +24,7 @@ export interface IBooking extends Document {
 }
 
 const BookingSchema = new Schema({
+  tx_ref: { type: String, required: true, unique: true },
   car: { type: Schema.Types.ObjectId, ref: "Car", required: true},
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   fullName: { type: String, required: true },

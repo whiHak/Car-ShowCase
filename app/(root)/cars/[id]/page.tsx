@@ -3,6 +3,7 @@ import BookConfirmation from "@/components/BookConfirmation";
 import DriverForm from "@/components/DriverForm";
 import FullCarDetail from "@/components/FullCarDetail";
 import PaymentOption from "@/components/PaymentOption";
+import { Spinner } from "@/components/spinner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getCarById } from "@/lib/actions/car.action";
 import { Params } from "@/types";
@@ -62,7 +63,7 @@ const CarDetailsPage = ({ params }: Params) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        Loading...
+        <Spinner/>
       </div>
     );
   }
@@ -116,13 +117,13 @@ const CarDetailsPage = ({ params }: Params) => {
             >
               Payment
             </TabsTrigger>
-            <TabsTrigger
+            {/* <TabsTrigger
               value="confirmation"
               disabled={activeTab !== "confirmation"}
               className="w-full py-[11px] px-[28px] md:text-base text-xs font-bold rounded-full data-[state=active]:bg-primary-blue data-[state=active]:text-white"
             >
               Confirmation
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
         </div>
         <div className="wrapper h-full grid justify-between grid-cols-1 md:grid-cols-2 2xl:max-w-7xl ">
@@ -165,9 +166,9 @@ const CarDetailsPage = ({ params }: Params) => {
               car={car}
             />
           </TabsContent>
-          <TabsContent value="confirmation">
+          {/* <TabsContent value="confirmation">
             <BookConfirmation />
-          </TabsContent>
+          </TabsContent> */}
         </div>
       </Tabs>
       <ToastContainer/>

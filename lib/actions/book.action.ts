@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database";
 import Book, { IBooking } from "../database/models/booking.model";
 import { Types } from 'mongoose';
@@ -21,8 +22,14 @@ export const createBooking = async (data: CreateBookingParams) => {
   try {
     await connectToDatabase();
     
+    // Generate a unique transaction reference
+    const timestamp = Date.now();
+    const randomStr = Math.random().toString(36).substring(2, 8);
+    const tx_ref = `TX-${timestamp}-${randomStr}`;
+
     const bookingData = {
       ...data,
+      tx_ref,
       user: new Types.ObjectId(data.user),
       car: new Types.ObjectId(data.car)
     };
@@ -61,3 +68,30 @@ export const updateBooking = async (bookingId: string, updateData: Partial<Creat
     throw error;
   }
 };
+
+export const getBooksByUserId = async(userId: string) => {
+  try {
+    await connectToDatabase();
+
+    const books = await Book.find({ user: userId })
+      .populate('car', 'make model price imageUrl1')
+      .populate('user', 'fullName email');
+      
+    return JSON.parse(JSON.stringify(books));
+  } catch (error) {
+    console.error("Error fetching user bookings:", error);
+    throw error;
+  }
+}
+
+export const deleteBooking = async(bookId: string) => {
+  try {
+    await connectToDatabase();
+    const deletedBook = await Book.findByIdAndDelete(bookId);
+    revalidatePath("/my-cars")
+    return JSON.parse(JSON.stringify(deletedBook));
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    throw error;
+  }
+}

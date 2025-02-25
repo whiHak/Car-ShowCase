@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import CustomButton from "./CustomButton";
 import { useBook } from "@/hooks/useBook";
+import { useRouter } from "next/navigation";
 
 interface PaymentOptionProps {
   onNext: () => void;
@@ -13,6 +14,7 @@ interface PaymentOptionProps {
 const PaymentOption = ({ onNext, onBack, car }: PaymentOptionProps) => {
   const [selectedOption, setSelectedOption] = useState("");
   const { loading, error, bookings, updateExistingBooking } = useBook();
+  const router = useRouter();
 
   const options = [
     { id: "chapa", label: "Chapa", imgsrc: "/assets/images/chapa.png" },
@@ -39,7 +41,7 @@ const PaymentOption = ({ onNext, onBack, car }: PaymentOptionProps) => {
       });
 
       // If successful, proceed to next step
-      onNext();
+      router.push("/my-cars")
     } catch (error) {
       console.error("Error updating booking with payment method:", error);
     }
