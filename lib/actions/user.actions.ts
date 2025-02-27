@@ -19,23 +19,6 @@ export const createuser = async (user: CreateuserPrams) => {
   try {
     await connectToDatabase();
     const newUser = await User.create(user);
-
-    if (user.clerkId) {
-      // Update Clerk metadata right after user creation
-      try {
-        const client = await clerkClient();
-        await client.users.updateUserMetadata(user.clerkId, {
-          publicMetadata: {
-            userId: newUser._id.toString(),
-          },
-        });
-      } catch (error) {
-        console.error("Failed to update Clerk metadata:", error);
-        await User.findByIdAndDelete(newUser._id);
-        throw new Error("Failed to update Clerk metadata");
-      }
-    }
-
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
     console.error("User creation error:", error);
