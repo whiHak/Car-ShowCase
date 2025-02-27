@@ -80,6 +80,13 @@ export type CreateuserPrams = {
   photo?: string;
 };
 
+export type UpdateUserParams = {
+  firstName?: string | null
+  lastName?: string | null
+  username?: string
+  photo?: string
+}
+
 export type Params = {
   params: Promise<{ id: string }>;
 }
