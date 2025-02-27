@@ -42,3 +42,15 @@ export const driverFormSchema = z.object({
     path: ["returnDate"], // This will show the error on the return date field
   }
 );
+
+
+
+// Feedback Form Schema
+
+export const feedbackFormSchema = z.object({
+  fullName: z.string().min(3, "Name must be at least 3 characters"),
+  email: z.string().email("Invalid email format"),
+  feedback: z.string().min(1, "Feedback is required"),
+});
+
+
