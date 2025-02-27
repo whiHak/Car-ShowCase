@@ -95,13 +95,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "OK", user: newUser });
     }
 
-    if (eventType === 'user.deleted') {
-      const { id } = evt.data
-  
-      const deletedUser = await deleteUser(id!)
-  
-      return NextResponse.json({ message: 'OK', user: deletedUser })
-    }
   } catch (error) {
     console.error("Webhook error:", error);
     return new Response("Internal Server Error", {
