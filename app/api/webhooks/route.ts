@@ -91,7 +91,8 @@ export async function POST(req: Request) {
         photo: image_url,
       };
 
-      return NextResponse.json({ message: "OK", user: user });
+      const newUser = await createuser(user);
+      return NextResponse.json({ message: "OK", user: newUser });
     }
 
     if (eventType === 'user.deleted') {
