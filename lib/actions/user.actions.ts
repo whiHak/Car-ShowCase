@@ -5,6 +5,7 @@ import { CreateuserPrams } from "@/types";
 import User from "../database/models/user.model";
 import { connectToDatabase } from "../database";
 import { auth } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 
 const populateUser = (query: any) => {
   return query.populate({
@@ -18,20 +19,38 @@ export const createuser = async (user: CreateuserPrams) => {
   try {
     await connectToDatabase();
     const newUser = await User.create(user);
+
+    if (user.clerkId) {
+      // Update Clerk metadata right after user creation
+      try {
+        const client = await clerkClient();
+        await client.users.updateUserMetadata(user.clerkId, {
+          publicMetadata: {
+            userId: newUser._id.toString(),
+          },
+        });
+      } catch (error) {
+        console.error("Failed to update Clerk metadata:", error);
+        await User.findByIdAndDelete(newUser._id);
+        throw new Error("Failed to update Clerk metadata");
+      }
+    }
+
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
-    console.error(error);
+    console.error("User creation error:", error);
+    throw error; // Re-throw to handle it in the calling function
   }
 };
 
-export const getUserId = async () =>{
-  const {sessionClaims} = await auth();
-      if (!sessionClaims) {
-        throw new Error("Unauthorized");
-      }
-      const userId = sessionClaims.userId as string;
-      return userId
-}
+export const getUserId = async () => {
+  const { sessionClaims } = await auth();
+  if (!sessionClaims) {
+    throw new Error("Unauthorized");
+  }
+  const userId = sessionClaims.userId as string;
+  return userId;
+};
 
 // export const getUserById = async(userId: string) => {
 //   try {
