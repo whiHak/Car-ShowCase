@@ -4,7 +4,6 @@ import React from "react";
 import { CancelReservation } from "./CancelReservation";
 import CheckoutButton from "./CheckoutButton";
 import { updateBooking } from "@/lib/actions/book.action";
-import { revalidatePath } from "next/cache";
 import PickupLocation from "./PickupLocation";
 
 const Card = async ({ book }: { book: any }) => {
@@ -89,9 +88,9 @@ const Card = async ({ book }: { book: any }) => {
     </div>
   ) : (
     <div className="relative top-16 flex-center wrapper min-h-[200px] w-full flex-col gap-3 rounded-[14px] py-28 text-center">
-      <h3 className="p-bold-20 md:h5-bold">No Reservation Yet?</h3>
+      <h3 className="p-bold-20 md:h5-bold ml-24">No Reservation Yet !!!</h3>
       <Link href="/">
-        <p className="p-regular-14">Book your own Car first!!!</p>
+        <p className="p-regular-14 text-primary-blue ml-24">Book your own Car first!!!</p>
       </Link>
     </div>
   );

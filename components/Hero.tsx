@@ -6,7 +6,8 @@ import Image from "next/image";
 const Hero = () => {
 
   const handleScroll = () => {
-
+    const element = document.getElementById("cars-section");
+    element?.scrollIntoView({ behavior: "smooth" });
   }
 
   return (

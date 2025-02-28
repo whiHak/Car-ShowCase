@@ -6,27 +6,43 @@ import ShowMore from "@/components/ShowMore";
 import { fuels, yearsOfProduction } from "@/constants";
 import { getAllCars } from "@/lib/actions/car.action";
 import { FilterProps } from "@/types";
-import { fetchCars } from "@/utils";
+
+// Add this interface near the top of the file, after the imports
+interface Car {
+  make: string;
+  model: string;
+  // Add other car properties as needed
+}
 
 const Home = async ({ searchParams }: FilterProps) => {
   try {
     const resolvedParams = await searchParams;
-    // const allCars = await Promise.resolve(fetchCars({
-    //   manufacturer: resolvedParams.manufacturer || "",
-    //   model: resolvedParams.model || "",
-    //   year: Number(resolvedParams.year) || 2022,
-    //   fuel: resolvedParams.fuel || "",
-    //   limit: Number(resolvedParams.limit) || 8
-    // }));
-
     const allCars = await getAllCars();
-    const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
+    
+    // Filter cars based on search parameters
+    let filteredCars = allCars;
+    
+    if (resolvedParams.manufacturer) {
+      filteredCars = filteredCars.filter((car: Car) => 
+        car.make.toLowerCase().includes(resolvedParams.manufacturer!.toLowerCase())
+      );
+    }
+    
+    if (resolvedParams.model) {
+      filteredCars = filteredCars.filter((car: Car) => 
+        car.model.toLowerCase().includes(resolvedParams.model!.toLowerCase())
+      );
+    }
+
+    const isDataEmpty =
+      !Array.isArray(filteredCars) || filteredCars.length < 1 || !filteredCars;
+
     return (
       <main className="overflow-hidden ">
         <Hero />
 
         <div className="mt-12 padding-x padding-y max-width">
-          <div className="home__text-container">
+          <div className="home__text-container" id="cars-section">
             <h1 className="text-4xl font-extrabold">Car Catalogue</h1>
             <p>Explore the car you might like</p>
           </div>
@@ -39,16 +55,16 @@ const Home = async ({ searchParams }: FilterProps) => {
           </div>
 
           {!isDataEmpty ? (
-            <section>
+            <section id="cars-section">
               <div className="home__cars-wrapper">
-                {allCars?.map((car, id) => (
-                  <CarCard car={car} key={id}/>
+                {filteredCars?.map((car: any, id: any) => (
+                  <CarCard car={car} key={id} />
                 ))}
               </div>
 
-              <ShowMore 
-                pageNumber={Number(resolvedParams.limit || 8)/8}
-                isNext={Number(resolvedParams.limit || 8) > allCars.length}
+              <ShowMore
+                pageNumber={Number(resolvedParams.limit || 8) / 8}
+                isNext={Number(resolvedParams.limit || 8) > filteredCars.length}
               />
             </section>
           ) : (
@@ -71,6 +87,6 @@ const Home = async ({ searchParams }: FilterProps) => {
       </main>
     );
   }
-}
+};
 
 export default Home;

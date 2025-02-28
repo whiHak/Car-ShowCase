@@ -35,21 +35,21 @@ const FeedbackForm = () => {
 
   async function onSubmit(values: z.infer<typeof feedbackFormSchema>) {
     try {
-      const response = await fetch('/api/feedback', {
-        method: 'POST',
+      const response = await fetch("/api/feedback", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(values)
+        body: JSON.stringify(values),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok) {
         toast.success(data.message);
         form.reset();
       } else {
-        toast.error(data.message || 'Something went wrong!');
+        toast.error(data.message || "Something went wrong!");
       }
     } catch (error) {
       toast.error("Something went wrong!");
@@ -60,7 +60,7 @@ const FeedbackForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className=" max-w-[700px] mx-auto relative top-40 h-screen flex flex-col justify- gap-5"
+        className=" max-w-[700px] mx-auto relative top-40 flex flex-col justify- gap-5"
       >
         <div className="flex flex-col justify-between gap-5">
           <div className="flex flex-col gap-5 md:flex-col">
@@ -105,7 +105,11 @@ const FeedbackForm = () => {
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl>
-                    <Textarea {...field} className="bg-grey-50 h-[84px] focus-visible:ring-offset-0 placeholder:text-grey-500 rounded-2xl p-medium-12 px-4 py-3 border-none focus-visible:ring-transparent" />
+                    <Textarea
+                      {...field}
+                      className="bg-grey-50 h-[94px] focus-visible:ring-offset-0 placeholder:text-grey-500 rounded-2xl p-medium-12 px-4 py-3 border-none focus-visible:ring-transparent"
+                      placeholder="Write your feedback here..."
+                    />
                   </FormControl>
                   <FormMessage className="text-red-500" />
                 </FormItem>
@@ -126,7 +130,7 @@ const FeedbackForm = () => {
           />
         </div>
       </form>
-      <ToastContainer/>
+      <ToastContainer />
     </Form>
   );
 };
