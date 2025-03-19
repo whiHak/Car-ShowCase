@@ -10,7 +10,7 @@
     <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="TypeScript" />
   </div>
 
-  <h3 align="center">A Full Stack Next 14  CarsHub ShowCase</h3>
+  <h3 align="center">A Full Stack Next 15  CarsHub ShowCase</h3>
 </div>
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
