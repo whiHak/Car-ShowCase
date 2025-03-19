@@ -128,7 +128,7 @@ const CarDetailsPage = ({ params }: Params) => {
         </div>
         <div className="wrapper h-full grid justify-between grid-cols-1 md:grid-cols-2 2xl:max-w-7xl ">
           <Image
-            src={car?.imageUrl || "/demo-car.webp"}
+            src={car?.imageUrl1 || "/demo-car.webp"}
             alt={`${car?.make} ${car?.model}` || "Car Image"}
             width={500}
             height={100}
