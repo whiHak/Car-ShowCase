@@ -93,10 +93,10 @@ export const manufacturers = [
     {
       title: "About",
       links: [
-        { title: "How it works", url: "/" },
-        { title: "Featured", url: "/" },
+        { title: "How it works", url: "/how-it-works" },
+        { title: "Featured", url: "/privacy-policy" },
         { title: "Partnership", url: "/" },
-        { title: "Bussiness Relation", url: "/" },
+        { title: "Business Relation", url: "/" },
       ],
     },
     {
@@ -111,10 +111,10 @@ export const manufacturers = [
     {
       title: "Socials",
       links: [
-        { title: "Discord", url: "/" },
-        { title: "Instagram", url: "/" },
-        { title: "Twitter", url: "/" },
-        { title: "Facebook", url: "/" },
+        { title: "Discord", url: "https://discord.com" },
+        { title: "Instagram", url: "https://instagram.com" },
+        { title: "Twitter", url: "https://twitter.com" },
+        { title: "Facebook", url: "https://facebook.com" },
       ],
     },
   ];
