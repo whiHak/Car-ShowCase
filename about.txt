@@ -1,0 +1,52 @@
+Welcome to LTC Car Rentals
+
+Our Booking Process in Detail:
+
+1. Vehicle Selection
+   - Browse our extensive fleet by category (Economy, Mid-size, SUV, Luxury)
+   - Filter by price range, passenger capacity, or specific features
+   - View real-time availability and pricing
+   - Compare multiple vehicles side by side
+
+2. Reservation Details
+   - Choose pickup and drop-off locations (30+ locations nationwide)
+   - Select dates and times (rentals available in 1-hour increments)
+   - Specify rental duration (hourly, daily, weekly, or monthly rates available)
+   - Input number of drivers
+
+3. Additional Options
+   - Insurance coverage selection (Basic, Premium, or Full Coverage)
+   - Add-on features available:
+     * GPS navigation system ($5/day)
+     * Child safety seats ($7/day)
+     * Additional driver registration ($10/day)
+     * Fuel service option
+     * Roadside assistance package
+
+4. Customer Information
+   - Create account or log in
+   - Required documents:
+     * Valid driver's license
+     * Credit card for security deposit
+     * Proof of insurance (if declining rental insurance)
+   - Age requirements: 21+ (additional fee for drivers under 25)
+
+5. Payment and Confirmation
+   - Transparent pricing with no hidden fees
+   - Multiple payment options accepted
+     * Major credit cards
+     * Digital payments (PayPal, Apple Pay)
+     * Corporate accounts
+   - Instant confirmation email with booking reference
+   - Free cancellation up to 24 hours before pickup
+
+6. Pickup Process
+   - Quick vehicle inspection
+   - Digital documentation
+   - Contactless pickup available
+   - 24/7 pickup available at select locations
+
+Contact us for assistance:
+Phone: 1-800-DRIVEEASE
+Email: bookings@driveease.com
+Live Chat: Available 24/7 on our website

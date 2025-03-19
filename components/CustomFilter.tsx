@@ -5,6 +5,8 @@ import { Listbox, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { Fragment, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { fadeIn, buttonAnimation } from "@/utils/motion";
 
 const CustomFilter = ({ title, options }: CustomFilterProps) => {
   const [selected, setSelected] = useState(options[0]);
@@ -14,8 +16,14 @@ const CustomFilter = ({ title, options }: CustomFilterProps) => {
     const newPathname = updateSearchParams(title, e.value.toLowerCase());
     router.push(newPathname);
   };
+
   return (
-    <div className="w-fit">
+    <motion.div 
+      className="w-fit"
+      variants={fadeIn("up", "tween", 0.2, 0.5)}
+      initial="hidden"
+      animate="show"
+    >
       <Listbox
         value={selected}
         onChange={(e) => {
@@ -23,50 +31,66 @@ const CustomFilter = ({ title, options }: CustomFilterProps) => {
           handleUpdateParams(e);
         }}
       >
-        <div className="relative  w-fit z-10">
-          <Listbox.Button className="custom-filter__btn">
-            <span>{selected.title}</span>
-            <Image
-              src="/chevron-up-down.svg"
-              width={20}
-              height={20}
-              alt="chevron up down"
-              className="ml-4 object-contain"
-            />
-          </Listbox.Button>
-          <Transition
-            as={Fragment}
-            leave="transition ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+        <div className="relative w-fit z-10">
+          <motion.div
+            variants={buttonAnimation}
+            whileHover="hover"
+            whileTap="tap"
           >
+            <Listbox.Button className="custom-filter__btn border-gray-200 rounded-full">
+              <span>{selected.title}</span>
+              <motion.div
+                animate={{ rotate: 180 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Image
+                  src="/chevron-up-down.svg"
+                  width={20}
+                  height={20}
+                  alt="chevron up down"
+                  className="ml-4 object-contain"
+                />
+              </motion.div>
+            </Listbox.Button>
+          </motion.div>
+          
+          <AnimatePresence>
             <Listbox.Options className="custom-filter__options">
-              {options.map((option) => (
-                <Listbox.Option
-                  value={option}
+              {options.map((option, index) => (
+                <motion.div
                   key={option.title}
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 px-4 ${
-                      active ? "bg-primary-blue text-white" : "text-gray-900"
-                    }`
-                  }
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: index * 0.05 }}
                 >
-                  {({ selected }) => (
-                    <span
-                      className={`block truncate ${
-                        selected ? "font-medium" : "font-normal"
-                      }`}
-                    >
-                      {option.title}
-                    </span>
-                  )}
-                </Listbox.Option>
+                  <Listbox.Option
+                    value={option}
+                    className={({ active }) =>
+                      `relative cursor-default select-none py-2 px-4 ${
+                        active ? "bg-primary-blue text-white" : "text-gray-900"
+                      }`
+                    }
+                  >
+                    {({ selected }) => (
+                      <motion.span
+                        className={`block truncate ${
+                          selected ? "font-medium" : "font-normal"
+                        }`}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {option.title}
+                      </motion.span>
+                    )}
+                  </Listbox.Option>
+                </motion.div>
               ))}
             </Listbox.Options>
-          </Transition>
+          </AnimatePresence>
         </div>
       </Listbox>
-    </div>
+    </motion.div>
   );
 };
 
